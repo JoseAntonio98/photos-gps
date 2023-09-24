@@ -1,22 +1,46 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonRow, IonFab, IonFabButton, IonIcon, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonText, IonCol } from '@ionic/react';
 import './Tab3.css';
+import { playOutline, star, stopCircleOutline } from 'ionicons/icons';
+import { useMotion } from '../hooks/useMotion';
 
 const Tab3: React.FC = () => {
+
+  const {accel, getListenerAccel, stopAcceleration} = useMotion()
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 3</IonTitle>
+          <IonTitle>Accelerometer</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 3 page" />
+        <IonGrid>
+          <IonRow>
+            <IonCol size='12' className='ion-text-center'>
+              <IonText>Accelerometer</IonText>
+            </IonCol>
+            <IonCol size='12' className='ion-text-center'>
+              <IonText>X: {accel?.x}</IonText>
+            </IonCol>
+            <IonCol size='12' className='ion-text-center'>
+            <IonText>Y: {accel?.y}</IonText>
+            </IonCol>
+            <IonCol size='12' className='ion-text-center'>
+            <IonText>Z: {accel?.z}</IonText>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+        <IonFab vertical='bottom' horizontal='start' slot='fixed'>
+          <IonFabButton onClick={ () => getListenerAccel()}>
+            <IonIcon icon={playOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>        
+        <IonFab vertical='bottom' horizontal='end' slot='fixed'>
+          <IonFabButton onClick={ () => stopAcceleration()}>
+            <IonIcon icon={stopCircleOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

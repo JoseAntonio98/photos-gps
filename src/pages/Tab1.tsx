@@ -1,22 +1,38 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonFab, IonRow, IonFabButton, IonIcon, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonText, IonGrid, IonCol } from '@ionic/react';
 import './Tab1.css';
+import { usePosition } from '../hooks/usePosition';
+import { locateOutline } from 'ionicons/icons';
 
 const Tab1: React.FC = () => {
+  
+  const { coordinates, getCurrentPosition } = usePosition()
+  
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          <IonTitle>GPS</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+        <IonGrid>
+          <IonRow>
+            <IonCol size='12' className="ion-text-center">
+              <IonText>Latitude: {coordinates?.latitude}</IonText>
+            </IonCol>
+            <IonCol size='12' className="ion-text-center">
+              <IonText>Longitude: {coordinates?.longitude}</IonText>
+            </IonCol>
+            <IonCol size='12' className="ion-text-center">
+              <IonText><b>Please turn On your GPS, if it didn't work</b></IonText>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+        <IonFab vertical='bottom' horizontal='center' slot='fixed'>
+          <IonFabButton onClick={ () => getCurrentPosition()}>
+            <IonIcon icon={locateOutline}></IonIcon>
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
